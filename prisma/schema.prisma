@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(STUDENT)
+  avatar    String?
+  bio       String?
+  logs      UserLog[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Module {
+  id          String            @id @default(cuid())
+  title       String
+  description String            @db.Text
+  tags        String            @db.Text // JSON array string: ["Web","Frontend"]
+  level       Level             @default(BEGINNER)
+  thumbnail   String?
+  published   Boolean           @default(true)
+  logs        UserLog[]
+  relationsFrom ConceptRelation[] @relation("sourceModule")
+  relationsTo   ConceptRelation[] @relation("targetModule")
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@map("modules")
+}
+
+model UserLog {
+  id        String   @id @default(cuid())
+  userId    String
+  moduleId  String
+  action    Action
+  rating    Int?     // 1-5, nullable
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module    Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([moduleId])
+  @@map("user_logs")
+}
+
+model ConceptRelation {
+  sourceId String
+  targetId String
+  weight   Float  @default(1.0)
+  source   Module @relation("sourceModule", fields: [sourceId], references: [id], onDelete: Cascade)
+  target   Module @relation("targetModule", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@id([sourceId, targetId])
+  @@map("concept_relations")
+}
+
+enum Role { 
+  ADMIN 
+  STUDENT 
+}
+
+enum Level { 
+  BEGINNER 
+  INTERMEDIATE 
+  ADVANCED 
+}
+
+enum Action { 
+  CLICK 
+  COMPLETE 
+}

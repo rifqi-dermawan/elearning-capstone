@@ -1,160 +1,103 @@
-"use client";
-import { useEffect, useState } from "react";
-import { daftarModul, userLogs } from "@/lib/data";
+import Link from "next/link";
+import { ArrowRight, BrainCircuit, ShieldCheck, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const [userId, setUserId] = useState("u1");
-  const [recs, setRecs] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetch(`/api/recommend?userId=${userId}`)
-      .then((res) => res.json())
-      .then((data) => setRecs(data.recommendations || []));
-  }, [userId]);
-
   return (
-    <main className="min-h-screen pb-20">
-      {/* Navbar Minimalis */}
-      <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div className="min-h-screen bg-slate-50 overflow-hidden flex flex-col">
+      {/* Navbar */}
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
               E
             </div>
-            <span className="font-extrabold text-xl tracking-tight">
+            <span className="font-extrabold text-xl tracking-tight text-slate-900">
               Learn<span className="text-blue-600">AI</span>
             </span>
           </div>
-
           <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-slate-500">
-              Keminatan :
-            </span>
-            <select
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              className="bg-slate-100 border-none text-sm font-semibold py-2 px-4 rounded-full focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-            >
-              <option value="u1">Frontend User</option>
-              <option value="u2">Backend User</option>
-              <option value="u3">AI Researcher</option>
-            </select>
+            <Link href="/login" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">
+              Masuk
+            </Link>
+            <Button asChild className="rounded-full shadow-md shadow-blue-500/20">
+              <Link href="/register">Mulai Gratis</Link>
+            </Button>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-6 mt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Sisi Kiri: Katalog Modul */}
-          <div className="lg:col-span-2">
-            <div className="mb-8">
-              <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">
-                Katalog Materi
-              </h2>
-              <h1 className="text-3xl font-extrabold text-slate-900">
-                Lanjutkan Pembelajaranmu
-              </h1>
-            </div>
+      {/* Hero Section */}
+      <main className="flex-1 pt-32 pb-16 px-6">
+        <div className="max-w-6xl mx-auto text-center relative">
+          {/* Decorative blurs */}
+          <div className="absolute top-0 right-1/2 translate-x-1/2 -z-10 w-[600px] h-[400px] bg-blue-400/20 rounded-full blur-[120px]" />
+          <div className="absolute top-20 right-1/4 -z-10 w-[400px] h-[300px] bg-purple-400/20 rounded-full blur-[100px]" />
 
-            <div className="grid gap-6">
-              {daftarModul.map((m) => (
-                <div
-                  key={m.id}
-                  className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300"
-                >
-                  <div className="flex justify-between items-center">
-                    <div className="space-y-2">
-                      <div className="flex gap-2">
-                        {m.tags.map((t) => (
-                          <span
-                            key={t}
-                            className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter"
-                          >
-                            #{t}
-                          </span>
-                        ))}
-                      </div>
-                      <h3 className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
-                        {m.title}
-                      </h3>
-                      <p className="text-slate-500 text-sm max-w-md leading-relaxed">
-                        {m.description}
-                      </p>
-                    </div>
-                    <button className="bg-slate-900 text-white text-xs font-bold px-6 py-3 rounded-xl hover:bg-blue-600 transition-colors shadow-lg shadow-slate-200">
-                      Mulai Belajar
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest mb-8 animate-fade-in-up">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            Platform E-Learning Masa Depan
           </div>
 
-          {/* Sisi Kanan: Widget Rekomendasi Pintar */}
-          <div className="space-y-8">
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
-              {/* Dekorasi Background */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-50 rounded-full blur-3xl"></div>
+          <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6 animate-fade-in-up animate-delay-100">
+            Belajar Semakin Cerdas dengan <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              Rekomendasi AI Personal
+            </span>
+          </h1>
 
-              <div className="relative z-10">
-                <div className="flex items-center gap-2 mb-6">
-                  <span className="flex h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
-                  <h2 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
-                    Rekomendasi AI
-                  </h2>
-                </div>
+          <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-500 mb-10 animate-fade-in-up animate-delay-200">
+            Platform kami menganalisis kebiasaan belajar Anda dan menggunakan model *Hybrid Filtering* untuk merekomendasikan materi eksklusif yang paling relevan.
+          </p>
 
-                <div className="space-y-5">
-                  {recs.map((r) => (
-                    <div
-                      key={r.id}
-                      className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-white hover:border-blue-100 transition-all cursor-default"
-                    >
-                      <h4 className="font-bold text-slate-800 text-sm mb-2">
-                        {r.title}
-                      </h4>
-                      <div className="flex items-start gap-2 text-[10px] text-slate-500 leading-tight">
-                        <span className="text-blue-600 font-bold">INFO:</span>
-                        <span className="italic">{r.reason}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up animate-delay-300">
+            <Button asChild size="lg" className="rounded-full h-14 px-8 text-base shadow-xl shadow-blue-500/20 w-full sm:w-auto">
+              <Link href="/login">
+                Mulai Belajar Sekarang <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-base border-slate-300 hover:bg-slate-50 text-slate-700 w-full sm:w-auto">
+              <Link href="/dashboard">Coba Dashboard Demo</Link>
+            </Button>
+          </div>
+
+          {/* Features Grid */}
+          <div className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6">
+                <BrainCircuit className="h-6 w-6" />
               </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Hybrid AI Recommender</h3>
+              <p className="text-slate-500 leading-relaxed">
+                Menggabungkan Content-Based dan Collaborative Filtering untuk rekomendasi materi yang akurat tanpa pandang bulu.
+              </p>
+            </div>
+            
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6">
+                <Zap className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Personalisasi Cepat</h3>
+              <p className="text-slate-500 leading-relaxed">
+                Sistem belajar dari setiap klik, rating, dan kelulusan materi, lalu menyesuaikan rekomendasi dalam hitungan detik.
+              </p>
             </div>
 
-            {/* Progress Card */}
-            <div className="bg-slate-900 p-8 rounded-3xl text-white shadow-2xl shadow-blue-900/20">
-              <h3 className="font-bold text-sm mb-4">Statistik Belajar</h3>
-              <div className="space-y-4">
-                {userLogs
-                  .filter((log) => log.userId === userId)
-                  .map((log, i) => {
-                    const modul = daftarModul.find((m) => m.id === log.modulId);
-                    return (
-                      <div
-                        key={i}
-                        className="border-l-2 border-blue-500 pl-4 py-1"
-                      >
-                        <p className="font-bold text-sm text-white">
-                          {modul?.title || "Modul tidak ditemukan"}
-                        </p>
-                        <div className="flex justify-between items-center mt-1">
-                          <span className="text-[10px] text-slate-400 uppercase tracking-tighter">
-                            Status: {log.action}
-                          </span>
-                          <span className="text-yellow-400 text-xs">
-                            ⭐ {log.rating}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
+                <ShieldCheck className="h-6 w-6" />
               </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Explainable AI</h3>
+              <p className="text-slate-500 leading-relaxed">
+                Bukan black box! Algoritma memberikan deskripsi jelas dan transparan mengapa Anda direkomendasikan suatu bahasan.
+              </p>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
