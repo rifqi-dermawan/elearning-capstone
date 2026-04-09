@@ -7,7 +7,7 @@ import { ArrowLeft, CheckCircle2, PlayCircle, Loader2, Star } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ModuleWithStats } from "@/types";
-import { parseTags, getLevelLabel, getLevelColor } from "@/lib/utils";
+import { parseTags, getLevelLabel } from "@/lib/utils";
 import Link from "next/link";
 
 export default function ModuleDetailPage({
@@ -114,7 +114,7 @@ export default function ModuleDetailPage({
           </h1>
 
           <div className="flex flex-wrap gap-2 mb-8">
-            {tags.map((t) => (
+            {tags.map((t: string) => (
               <span key={t} className="bg-slate-100 text-slate-600 px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider">
                 {t}
               </span>

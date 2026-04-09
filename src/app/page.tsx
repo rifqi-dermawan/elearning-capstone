@@ -43,24 +43,17 @@ export default function Home() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6 animate-fade-in-up animate-delay-100">
-            Belajar Semakin Cerdas dengan <br className="hidden md:block"/>
+            Belajar Lebih Fokus,<br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              Rekomendasi AI Personal
+              Tanpa Ribet Cari Materi.
             </span>
           </h1>
-
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-500 mb-10 animate-fade-in-up animate-delay-200">
-            Platform kami menganalisis kebiasaan belajar Anda dan menggunakan model *Hybrid Filtering* untuk merekomendasikan materi eksklusif yang paling relevan.
-          </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up animate-delay-300">
             <Button asChild size="lg" className="rounded-full h-14 px-8 text-base shadow-xl shadow-blue-500/20 w-full sm:w-auto">
               <Link href="/login">
                 Mulai Belajar Sekarang <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-base border-slate-300 hover:bg-slate-50 text-slate-700 w-full sm:w-auto">
-              <Link href="/dashboard">Coba Dashboard Demo</Link>
             </Button>
           </div>
 
@@ -70,19 +63,19 @@ export default function Home() {
               <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6">
                 <BrainCircuit className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Hybrid AI Recommender</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Rekomendasi Materi Pintar</h3>
               <p className="text-slate-500 leading-relaxed">
-                Menggabungkan Content-Based dan Collaborative Filtering untuk rekomendasi materi yang akurat tanpa pandang bulu.
+                Dapatkan saran materi pembelajaran yang disesuaikan dengan minat dan tingkat pemahaman Anda secara akurat.
               </p>
             </div>
-            
+
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
               <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6">
                 <Zap className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Personalisasi Cepat</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Belajar Sesuai Minat</h3>
               <p className="text-slate-500 leading-relaxed">
-                Sistem belajar dari setiap klik, rating, dan kelulusan materi, lalu menyesuaikan rekomendasi dalam hitungan detik.
+                Pilih jalur pembelajaran yang Anda inginkan, mulai dari Web Development hingga Artificial Intelligence.
               </p>
             </div>
 
@@ -90,9 +83,9 @@ export default function Home() {
               <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
                 <ShieldCheck className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Explainable AI</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Transparansi Rekomendasi</h3>
               <p className="text-slate-500 leading-relaxed">
-                Bukan black box! Algoritma memberikan deskripsi jelas dan transparan mengapa Anda direkomendasikan suatu bahasan.
+                Ketahui alasan yang jelas mengapa suatu materi atau topik pembelajaran disarankan khusus untuk Anda pelajari.
               </p>
             </div>
           </div>

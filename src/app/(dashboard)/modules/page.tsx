@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { BookOpen, Search, Filter } from "lucide-react";
+import { BookOpen, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { parseTags, getLevelColor, getLevelLabel } from "@/lib/utils";
 export default function ModulesCatalogPage() {
   const [modules, setModules] = useState<ModuleWithStats[]>([]);
   const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("Semua");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,12 +26,15 @@ export default function ModulesCatalogPage() {
       .catch(() => setLoading(false));
   }, []);
 
-  const filteredModules = modules.filter(
-    (m) =>
-      m.title.toLowerCase().includes(search.toLowerCase()) ||
-      m.description.toLowerCase().includes(search.toLowerCase()) ||
-      parseTags(m.tags).some(tag => tag.toLowerCase().includes(search.toLowerCase()))
-  );
+  const categories = ["Semua", "Frontend", "Backend", "AI", "Data Science"];
+
+  const filteredModules = modules.filter((m) => {
+    const modTags = parseTags(m.tags);
+    const textFields = [m.title, m.description, ...modTags].map(t => typeof t === "string" ? t.toLowerCase() : "").join(" ");
+    const matchSearch = textFields.includes(search.toLowerCase());
+    const matchCategory = activeCategory === "Semua" || modTags.some(t => typeof t === "string" && t.toLowerCase() === activeCategory.toLowerCase());
+    return matchSearch && matchCategory;
+  });
 
   return (
     <div className="space-y-8 animate-fade-in-up">
@@ -41,11 +45,26 @@ export default function ModulesCatalogPage() {
             Katalog Materi
           </h1>
           <p className="mt-2 text-slate-500">
-            Jelajahi semua modul pembelajaran yang tersedia di platform.
+            Jelajahi semua modul pembelajaran yang tersedia di platform sesuai minat Anda.
           </p>
         </div>
-        <div className="flex w-full md:w-auto items-center gap-2">
-          <div className="relative w-full md:w-64">
+        <div className="flex flex-col sm:flex-row w-full md:w-auto items-start sm:items-center gap-4">
+          <div className="flex flex-wrap gap-2">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${
+                  activeCategory === cat
+                    ? "bg-blue-600 text-white"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input
               placeholder="Cari kelas atau topik..."
@@ -54,9 +73,6 @@ export default function ModulesCatalogPage() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <Button variant="outline" size="icon" className="h-10 w-10 rounded-full shrink-0">
-            <Filter className="h-4 w-4" />
-          </Button>
         </div>
       </div>
 
@@ -80,7 +96,7 @@ export default function ModulesCatalogPage() {
                 <CardContent className="p-6 flex flex-col flex-1">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex flex-wrap gap-1">
-                      {tags.slice(0, 2).map((t) => (
+                      {tags.slice(0, 3).map((t: string) => (
                         <span key={t} className="bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border border-slate-200">
                           {t}
                         </span>

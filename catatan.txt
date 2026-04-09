@@ -1,0 +1,5 @@
+masalah chatbot agar terconnect dengan Api
+untuk login melalui goggle agar 
+
+ubah:
+untuk total interaksi agar menjadi secara real time

@@ -1,40 +1,31 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
-export function formatDate(date: Date | string): string {
-  return new Date(date).toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+export function parseTags(tags: string | string[] | null | undefined): string[] {
+  if (!tags) return [];
+  if (Array.isArray(tags)) return tags;
+  try {
+    const parsed = JSON.parse(tags);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return tags.split(",").map((t) => t.trim()).filter(Boolean);
+  }
 }
 
 export function getLevelLabel(level: string): string {
-  const map: Record<string, string> = {
-    BEGINNER: "Pemula",
-    INTERMEDIATE: "Menengah",
-    ADVANCED: "Lanjutan",
-  };
-  return map[level] ?? level;
+  if (level === "BEGINNER") return "Beginner";
+  if (level === "INTERMEDIATE") return "Intermediate";
+  if (level === "ADVANCED") return "Advanced";
+  return level;
 }
 
 export function getLevelColor(level: string): string {
-  const map: Record<string, string> = {
-    BEGINNER: "bg-emerald-100 text-emerald-700",
-    INTERMEDIATE: "bg-amber-100 text-amber-700",
-    ADVANCED: "bg-rose-100 text-rose-700",
-  };
-  return map[level] ?? "bg-slate-100 text-slate-700";
-}
-
-export function parseTags(tagsJson: string): string[] {
-  try {
-    return JSON.parse(tagsJson);
-  } catch {
-    return [];
-  }
+  if (level === "BEGINNER") return "bg-green-100 text-green-700";
+  if (level === "INTERMEDIATE") return "bg-yellow-100 text-yellow-700";
+  if (level === "ADVANCED") return "bg-red-100 text-red-700";
+  return "bg-slate-100 text-slate-700";
 }

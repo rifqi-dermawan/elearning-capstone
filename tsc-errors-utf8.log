@@ -1,0 +1,26 @@
+﻿src/app/(admin)/admin/modules/page.tsx(10,10): error TS2305: Module '"@/lib/utils"' has no exported member 'parseTags'.
+src/app/(admin)/admin/modules/page.tsx(10,21): error TS2305: Module '"@/lib/utils"' has no exported member 'getLevelLabel'.
+src/app/(admin)/admin/modules/page.tsx(10,36): error TS2305: Module '"@/lib/utils"' has no exported member 'getLevelColor'.
+src/app/(admin)/admin/modules/page.tsx(108,50): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/app/(dashboard)/dashboard/page.tsx(123,79): error TS2322: Type '"default" | "gradient"' is not assignable to type '"link" | "default" | "outline" | "secondary" | "ghost" | "destructive" | null | undefined'.
+  Type '"gradient"' is not assignable to type '"link" | "default" | "outline" | "secondary" | "ghost" | "destructive" | null | undefined'.
+src/app/(dashboard)/modules/[moduleId]/page.tsx(10,10): error TS2305: Module '"@/lib/utils"' has no exported member 'parseTags'.
+src/app/(dashboard)/modules/[moduleId]/page.tsx(10,21): error TS2305: Module '"@/lib/utils"' has no exported member 'getLevelLabel'.
+src/app/(dashboard)/modules/[moduleId]/page.tsx(10,36): error TS2305: Module '"@/lib/utils"' has no exported member 'getLevelColor'.
+src/app/(dashboard)/modules/[moduleId]/page.tsx(117,24): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/app/(dashboard)/modules/page.tsx(11,10): error TS2305: Module '"@/lib/utils"' has no exported member 'parseTags'.
+src/app/(dashboard)/modules/page.tsx(11,21): error TS2305: Module '"@/lib/utils"' has no exported member 'getLevelColor'.
+src/app/(dashboard)/modules/page.tsx(11,36): error TS2305: Module '"@/lib/utils"' has no exported member 'getLevelLabel'.
+src/app/(dashboard)/modules/page.tsx(32,30): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+src/app/(dashboard)/modules/page.tsx(83,46): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/lib/auth.ts(46,9): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/lib/data.ts(1,10): error TS2305: Module '"@/types"' has no exported member 'Modul'.
+src/lib/data.ts(1,17): error TS2305: Module '"@/types"' has no exported member 'UserLog'.
+src/lib/recommender.ts(2,10): error TS2305: Module '"@/lib/utils"' has no exported member 'parseTags'.
+src/lib/recommender.ts(50,32): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/lib/recommender.ts(60,49): error TS2345: Argument of type 'Set<unknown>' is not assignable to parameter of type 'Set<string>'.
+  Type 'unknown' is not assignable to type 'string'.
+src/lib/recommender.ts(61,69): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/lib/recommender.ts(63,32): error TS2322: Type 'unknown[]' is not assignable to type 'string[]'.
+  Type 'unknown' is not assignable to type 'string'.

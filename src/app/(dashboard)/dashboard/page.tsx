@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { Sparkles, ArrowRight, BookOpen, Clock, Activity } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Sparkles, ArrowRight, Activity } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Recommendation, UserLogEntry } from "@/types";
@@ -87,7 +87,7 @@ export default function DashboardPage() {
                         <Badge variant={rec.reasonType} className="uppercase px-2.5 py-0.5 text-[10px] tracking-wider font-extrabold max-w-max">
                           {rec.reasonType} Match
                         </Badge>
-                        <Badge variant={rec.level.toLowerCase() as any} className="uppercase px-2.5 py-0.5 text-[10px] tracking-wider font-extrabold pb-0.5">
+                        <Badge variant={rec.level.toLowerCase() as "default" | "secondary" | "destructive" | "outline" | null | undefined} className="uppercase px-2.5 py-0.5 text-[10px] tracking-wider font-extrabold pb-0.5">
                           {rec.level}
                         </Badge>
                         {index === 0 && (
@@ -120,7 +120,7 @@ export default function DashboardPage() {
                         </div>
                         <div className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Match Score</div>
                       </div>
-                      <Button asChild className="w-full rounded-xl shadow-sm" variant={index === 0 ? "gradient" : "default"}>
+                      <Button asChild className={`w-full rounded-xl shadow-sm ${index === 0 ? "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0" : ""}`} variant={index === 0 ? "default" : "outline"}>
                         <Link href={`/modules/${rec.moduleId}`}>
                           Mulai <ArrowRight className="ml-1.5 h-3 w-3" />
                         </Link>

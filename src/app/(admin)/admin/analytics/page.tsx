@@ -6,7 +6,7 @@ import { Loader2, TrendingUp, Sparkles } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function AdminAnalyticsPage() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<{ name: string, fullTitle: string, value: number }[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function AdminAnalyticsPage() {
       .then((logs) => {
         // Simple aggregation to count logs per module for charting
         const map = new Map();
-        logs.forEach((log: any) => {
+        logs.forEach((log: { module?: { title: string } }) => {
           const title = log.module?.title || "Unknown";
           if (!map.has(title)) {
             map.set(title, { name: title.substring(0, 15) + "...", fullTitle: title, value: 0 });

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { User, Mail, Calendar, Activity, Loader2, BookOpen } from "lucide-react";
+import { Mail, Calendar, Activity, Loader2, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserLogEntry } from "@/types";
 

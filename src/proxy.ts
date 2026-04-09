@@ -6,9 +6,15 @@ export default withAuth(
     const token = req.nextauth.token;
     const pathname = req.nextUrl.pathname;
 
-    // Admin-only routes
-    if (pathname.startsWith("/admin") && token?.role !== "ADMIN") {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+    // Admin/Lecturer routes
+    if (pathname.startsWith("/admin")) {
+      if (token?.role !== "ADMIN" && token?.role !== "LECTURER") {
+        return NextResponse.redirect(new URL("/dashboard", req.url));
+      }
+      // Only ADMIN can access /admin/users
+      if (pathname.startsWith("/admin/users") && token?.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/admin", req.url));
+      }
     }
 
     return NextResponse.next();

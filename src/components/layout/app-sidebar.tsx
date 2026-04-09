@@ -8,11 +8,10 @@ import {
   LayoutDashboard,
   User,
   LogOut,
-  Settings,
   Users,
   BarChart3,
-  Sparkles,
   GraduationCap,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -29,46 +28,49 @@ const adminNav = [
   { href: "/admin/analytics", label: "Analitik AI", icon: BarChart3 },
 ];
 
-export function AppSidebar() {
+const lecturerNav = [
+  { href: "/admin", label: "Dosen Dashboard", icon: LayoutDashboard },
+  { href: "/admin/modules", label: "Kelola Materi", icon: BookOpen },
+];
+
+export function AppSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN";
-  const nav = isAdmin ? adminNav : studentNav;
+  const isLecturer = session?.user?.role === "LECTURER";
+  const nav = isAdmin ? adminNav : isLecturer ? lecturerNav : studentNav;
 
   return (
-    <aside className="sidebar fixed inset-y-0 left-0 z-50 flex h-screen w-64 flex-col border-r border-white/10">
+    <aside className="sidebar flex h-screen w-64 flex-col border-r border-white/10 bg-slate-900">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-6 py-6 border-b border-white/10">
+      <div className="flex items-center gap-3 px-6 py-6 border-b border-white/10 relative">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500 shadow-lg shadow-blue-500/40">
           <GraduationCap className="h-5 w-5 text-white" />
         </div>
-        <div>
+        <div className="flex-1">
           <span className="font-bold text-white text-lg leading-none">
             Learn<span className="text-blue-400">AI</span>
           </span>
           <p className="text-[10px] text-slate-400 mt-0.5">
-            {isAdmin ? "Admin Panel" : "E-Learning Platform"}
+            {isAdmin ? "Admin Panel" : isLecturer ? "Dosen Panel" : "E-Learning Platform"}
           </p>
         </div>
+        {onClose && (
+          <button onClick={onClose} className="lg:hidden absolute right-4 top-6 text-slate-400 hover:text-white p-1">
+            <X className="h-5 w-5" />
+          </button>
+        )}
       </div>
-
-      {/* AI Badge */}
-      {!isAdmin && (
-        <div className="px-4 py-3">
-          <div className="flex items-center gap-2 rounded-xl bg-blue-500/10 border border-blue-500/20 px-3 py-2">
-            <Sparkles className="h-3.5 w-3.5 text-blue-400" />
-            <span className="text-xs font-semibold text-blue-300">AI-Powered Recommender</span>
-          </div>
-        </div>
-      )}
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 px-3 py-2">
         <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-          {isAdmin ? "Administrasi" : "Menu Utama"}
+          {isAdmin || isLecturer ? "Administrasi" : "Menu Utama"}
         </p>
         {nav.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || (href !== "/" && pathname.startsWith(href));
+          // Exact match for root routes, prefix match for sub-routes
+          const isRoot = href === "/admin" || href === "/dashboard";
+          const active = isRoot ? pathname === href : pathname === href || pathname.startsWith(href + "/");
           return (
             <Link
               key={href}

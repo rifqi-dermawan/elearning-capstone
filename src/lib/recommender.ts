@@ -210,7 +210,7 @@ export async function getHybridRecommendations(
   ]);
 
   // Merge hybrid scores
-  const results: RecommendationResult[] = candidates.map((mod: any) => {
+  const results: RecommendationResult[] = candidates.map((mod: { id: string; title: string; description: string; tags: string; level: string; }) => {
     const cb = cbScores.get(mod.id) ?? { score: 0, matchedTags: [] };
     const cf = cfScores.get(mod.id) ?? 0;
 
