@@ -2,7 +2,7 @@
 
 LearnAI adalah platform e-learning cerdas yang merekomendasikan materi pembelajaran secara personal. Sistem tidak hanya mengandalkan popularitas materi, tetapi mempertimbangkan histori belajar (*learning behavior*), rating, serta keterkaitan konsep (*concept similarity*) antar materi menggunakan algoritma **Hybrid Recommendation System** (Content-Based & Collaborative Filtering).
 
-Proyek ini dibangun sebagai penyelesaian tugas Capstone / Skripsi Program Studi Informatika.
+Proyek ini dibangun sebagai penyelesaian tugas Capstone Program Studi Informatika.
 
 ---
 
