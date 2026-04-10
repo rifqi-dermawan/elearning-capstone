@@ -46,16 +46,12 @@ Ikuti langkah-langkah berikut untuk menjalankan project ini di komputer lokal An
 - **MySQL** atau MariaDB yang sudah berjalan.
 
 ### 1. Clone Repository
-\`\`\`bash
 git clone https://github.com/username/elearning-capstone.git
 cd elearning-capstone
-\`\`\`
 *(Catatan: Sesuaikan URL dengan repository GitHub Anda)*
 
 ### 2. Install Dependencies
-\`\`\`bash
 npm install
-\`\`\`
 
 ### 3. Konfigurasi Environment Variable
 Buat file `.env` di root project. Anda bisa mencontek format di bawah ini:
