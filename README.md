@@ -2,7 +2,7 @@
 
 LearnAI adalah platform e-learning cerdas yang merekomendasikan materi pembelajaran secara personal. Sistem tidak hanya mengandalkan popularitas materi, tetapi mempertimbangkan histori belajar (*learning behavior*), rating, serta keterkaitan konsep (*concept similarity*) antar materi menggunakan algoritma **Hybrid Recommendation System** (Content-Based & Collaborative Filtering).
 
-Proyek ini dibangun sebagai penyelesaian tugas Capstone Program Studi Informatika.
+Proyek ini dibangun sebagai penyelesaian tugas Capstone / Skripsi Program Studi Informatika.
 
 ---
 
@@ -42,23 +42,29 @@ Aplikasi ini telah memenuhi seluruh spesifikasi tugas akhir yang disyaratkan:
 Ikuti langkah-langkah berikut untuk menjalankan project ini di komputer lokal Anda.
 
 ### Prasyarat
-- **Node.js** 
-- **MySQL** 
+- **Node.js** (Versi 20 ke atas disarankan)
+- **MySQL** atau MariaDB yang sudah berjalan.
 
 ### 1. Clone Repository
-git clone https://github.com/username/elearning-capstone.git
+\`\`\`bash
+git clone https://github.com/USERNAME_KAMU/elearning-capstone.git
 cd elearning-capstone
+\`\`\`
+*(Catatan: Sesuaikan URL dengan repository GitHub Anda)*
 
 ### 2. Install Dependencies
+\`\`\`bash
 npm install
+\`\`\`
 
 ### 3. Konfigurasi Environment Variable
 Buat file `.env` di root project. Anda bisa mencontek format di bawah ini:
 
 **File: `.env`**
+\`\`\`env
 # Database Configuration
 # Ganti user, password, dan nama database sesuai settingan MySQL lokal Anda
-DATABASE_URL="mysql://root:password@localhost:3306/elearning_db"
+DATABASE_URL="mysql://root:password@localhost:3306/learnai_db"
 
 # Better Auth Configuration
 # Generate secret acak (bisa pakai 'openssl rand -base64 32')
@@ -74,16 +80,23 @@ SMTP_HOST="smtp.gmail.com"
 SMTP_PORT="465"
 SMTP_USER="emailmudisini@gmail.com"
 SMTP_PASSWORD="app_password_gmail"
+\`\`\`
 
 ### 4. Setup Database
 Jalankan perintah prisma untuk melakukan push skema ke database MySQL Anda.
+\`\`\`bash
 npx prisma db push
+\`\`\`
 
 *(Opsional)* Jika ingin melihat/mengedit data secara visual:
+\`\`\`bash
 npx prisma studio
+\`\`\`
 
 ### 5. Jalankan Server Development
+\`\`\`bash
 npm run dev
+\`\`\`
 Buka http://localhost:3000 di browser Anda.
 
 ---
@@ -91,7 +104,9 @@ Buka http://localhost:3000 di browser Anda.
 ## 🧪 Skenario Pengujian AI (Untuk Dosen / Penguji)
 
 Untuk memvalidasi algoritma personalisasi, pastikan untuk melakukan injeksi data *dummy* (modul, relasi konsep, dan 5 akun mahasiswa untuk pengujian) dengan menjalankan skrip berikut di terminal:
+\`\`\`bash
 npx tsx src/lib/seed.ts
+\`\`\`
 
 Setelah berhasil, gunakan kredensial berikut (Password untuk semua akun: `password123`):
 
