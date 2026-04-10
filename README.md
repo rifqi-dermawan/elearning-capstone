@@ -29,11 +29,11 @@ Aplikasi ini telah memenuhi seluruh spesifikasi tugas akhir yang disyaratkan:
 
 ## 🛠️ Teknologi yang Digunakan
 
-- **Framework:** Next.js (App Router)
-- **Bahasa:** TypeScript
-- **Database ORM:** Prisma ORM
-- **Database Engine:** MySQL / MariaDB
-- **Styling:** Tailwind CSS & Shadcn UI
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router, Server Actions)
+- **Bahasa:** [TypeScript](https://www.typescriptlang.org/)
+- **Database ORM:** [Prisma](https://www.prisma.io/)
+- **Database:** [MySQL](https://www.mysql.com/) / [MariaDB](https://mariadb.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) & [Shadcn UI](https://ui.shadcn.com/)
 
 ---
 
@@ -47,7 +47,7 @@ Ikuti langkah-langkah berikut untuk menjalankan project ini di komputer lokal An
 
 ### 1. Clone Repository
 \`\`\`bash
-git clone https://github.com/USERNAME_KAMU/elearning-capstone.git
+git clone https://github.com/username/elearning-capstone.git
 cd elearning-capstone
 \`\`\`
 *(Catatan: Sesuaikan URL dengan repository GitHub Anda)*
@@ -64,7 +64,7 @@ Buat file `.env` di root project. Anda bisa mencontek format di bawah ini:
 \`\`\`env
 # Database Configuration
 # Ganti user, password, dan nama database sesuai settingan MySQL lokal Anda
-DATABASE_URL="mysql://root:password@localhost:3306/learnai_db"
+DATABASE_URL="mysql://root:password@localhost:3306/elearning_db"
 
 # Better Auth Configuration
 # Generate secret acak (bisa pakai 'openssl rand -base64 32')
