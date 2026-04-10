@@ -46,7 +46,8 @@ Ikuti langkah-langkah berikut untuk menjalankan project ini di komputer lokal An
 - **MySQL** atau MariaDB yang sudah berjalan.
 
 ### 1. Clone Repository
-git clone https://github.com/username/elearning-capstone.git
+```bash
+git clone https://github.com/USERNAME_KAMU/elearning-capstone.git
 cd elearning-capstone
 *(Catatan: Sesuaikan URL dengan repository GitHub Anda)*
 
