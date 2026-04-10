@@ -3,7 +3,6 @@ import { Inter, Geist, Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { cn } from "@/lib/utils";
-import { FloatingChatbot } from "@/components/FloatingChatbot";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -39,7 +38,6 @@ export default function RootLayout({
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
         <Providers>
           {children}
-          <FloatingChatbot />
         </Providers>
       </body>
     </html>

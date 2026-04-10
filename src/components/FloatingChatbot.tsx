@@ -28,7 +28,7 @@ export function FloatingChatbot() {
     }
   }, [messages, loading]);
 
-  if (pathname?.startsWith("/admin")) {
+  if (pathname === "/profile") {
     return null;
   }
 

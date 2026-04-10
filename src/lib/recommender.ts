@@ -148,10 +148,30 @@ async function getCollaborativeScores(
 function generateReason(
   cbScore: number,
   cfScore: number,
-  matchedTags: string[]
+  matchedTags: string[],
+  hasRelation: boolean = false
 ): { reason: string; type: "content" | "collaborative" | "hybrid" | "popular" } {
   const hasContent = cbScore > 0 && matchedTags.length > 0;
   const hasCollab = cfScore > 0;
+
+  if (hasRelation) {
+    if (hasContent && hasCollab) {
+      return {
+        reason: `Materi lanjutan! Kamu tertarik pada ${matchedTags.slice(0, 2).join(" & ")}, dan direkomendasikan pengguna lain.`,
+        type: "hybrid",
+      };
+    } else if (hasContent) {
+      return {
+        reason: `Materi lanjutan yang sangat relevan dengan topik ${matchedTags.slice(0, 3).join(", ")}.`,
+        type: "content",
+      };
+    } else {
+      return {
+        reason: `Materi lanjutan langsung berdasar alur belajar dari modul yang sudah kamu selesaikan.`,
+        type: "content",
+      };
+    }
+  }
 
   if (hasContent && hasCollab) {
     return {
@@ -191,9 +211,10 @@ export async function getHybridRecommendations(
   // Get modules already interacted by this user
   const userInteracted = await prisma.userLog.findMany({
     where: { userId },
-    select: { moduleId: true },
+    select: { moduleId: true, action: true },
   });
-  const interactedIds = new Set(userInteracted.map((l: { moduleId: string }) => l.moduleId));
+  const interactedIds = new Set(userInteracted.map((l: { moduleId: string, action: string }) => l.moduleId));
+  const completedIds = Array.from(new Set(userInteracted.filter(l => l.action === "COMPLETE").map(l => l.moduleId)));
 
   // Candidates = modules NOT yet seen by this user
   const candidates = allModules.filter((m: { id: string }) => !interactedIds.has(m.id));
@@ -203,19 +224,36 @@ export async function getHybridRecommendations(
   const candidateIds = candidates.map((m: { id: string }) => m.id);
   const allModuleIds = allModules.map((m: { id: string }) => m.id);
 
-  // Run both engines in parallel
-  const [cbScores, cfScores] = await Promise.all([
+  // Run both engines in parallel + fetch concept relations to previous completed modules
+  const [cbScores, cfScores, conceptRelations] = await Promise.all([
     getContentBasedScores(userId, candidateIds, allModules),
     getCollaborativeScores(userId, candidateIds, allModuleIds),
+    prisma.conceptRelation.findMany({
+      where: {
+        sourceId: { in: completedIds },
+        targetId: { in: candidateIds }
+      }
+    }),
   ]);
+
+  const relationScores = new Map<string, number>();
+  for (const rel of conceptRelations) {
+    relationScores.set(rel.targetId, (relationScores.get(rel.targetId) || 0) + rel.weight);
+  }
+
+  const RELATION_WEIGHT_MULTIPLIER = 0.3; // Weight factor for connected concepts
 
   // Merge hybrid scores
   const results: RecommendationResult[] = candidates.map((mod: { id: string; title: string; description: string; tags: string; level: string; }) => {
     const cb = cbScores.get(mod.id) ?? { score: 0, matchedTags: [] };
     const cf = cfScores.get(mod.id) ?? 0;
+    const crScore = relationScores.get(mod.id) ?? 0;
 
-    const finalScore = ALPHA * cb.score + (1 - ALPHA) * cf;
-    const { reason, type } = generateReason(cb.score, cf, cb.matchedTags);
+    const baseScore = ALPHA * cb.score + (1 - ALPHA) * cf;
+    const finalScore = baseScore + (crScore * RELATION_WEIGHT_MULTIPLIER);
+    const hasRelation = crScore > 0;
+
+    const { reason, type } = generateReason(cb.score, cf, cb.matchedTags, hasRelation);
 
     return {
       moduleId: mod.id,
