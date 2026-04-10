@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 LearnAI - Aplikasi E-Learning Berbasis AI Recommendation System
 
-## Getting Started
+LearnAI adalah platform e-learning cerdas yang merekomendasikan materi pembelajaran secara personal. Sistem tidak hanya mengandalkan popularitas materi, tetapi mempertimbangkan histori belajar (*learning behavior*), rating, serta keterkaitan konsep (*concept similarity*) antar materi menggunakan algoritma **Hybrid Recommendation System** (Content-Based & Collaborative Filtering).
 
-First, run the development server:
+Proyek ini dibangun sebagai penyelesaian tugas Capstone / Skripsi Program Studi Informatika.
 
-```bash
+---
+
+## 🎯 Capstone Requirements & Fulfillment
+
+Aplikasi ini telah memenuhi seluruh spesifikasi tugas akhir yang disyaratkan:
+
+- ✅ **AI Minimum (Recommender):** Menggunakan algoritma **Hybrid** (Jaccard Similarity untuk *Content-Based* dan Cosine Similarity untuk *Collaborative Filtering*).
+- ✅ **Input & Output:** Mengambil dataset histori pengguna (Click, Complete, Rating) dan menghasilkan Top 5 Rekomendasi dilengkapi teks **Alasan (Explainable AI)**.
+- ✅ **Novelty AI:** Mempertimbangkan keterkaitan konsep/silabus (`ConceptRelation`) untuk memprioritaskan materi lanjutan.
+- ✅ **Uji 5 User Dummy:** Sistem memiliki 5 profil *dummy* (*seed data*) yang menghasilkan *output* rekomendasi kontras sesuai *behavior* masing-masing.
+- ✅ **Simulasi CTR:** Terdapat pencatatan metrik interaksi (Click-Through Rate) secara *real-time* saat widget rekomendasi diklik oleh *user*.
+
+---
+
+## 🚀 Fitur Utama
+
+1. **Smart Dashboard:** Menampilkan "Top 5 Rekomendasi" khusus untuk pengguna yang sedang *login*.
+2. **Explainable AI:** Pengguna dapat melihat alasan transparan mengapa suatu materi direkomendasikan (misal: *"Karena kamu tertarik pada Web & Frontend"* atau *"Materi lanjutan langsung berdasar alur belajar..."*).
+3. **Activity Logging:** Merekam setiap aksi `CLICK` dan `COMPLETE` serta penilaian (`RATING`) secara otomatis di *background*.
+4. **Admin / Lecturer Panel:** Manajemen *module* (materi), penentuan relasi antar konsep materi, dan pemantauan analitik pengguna.
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+- **Framework:** Next.js (App Router)
+- **Bahasa:** TypeScript
+- **Database ORM:** Prisma ORM
+- **Database Engine:** MySQL / PostgreSQL
+- **Styling:** Tailwind CSS & Shadcn UI
+- **Authentication:** NextAuth.js
+
+---
+
+## ⚙️ Cara Instalasi & Menjalankan di Lokal
+
+Ikuti langkah-langkah berikut untuk menjalankan aplikasi ini di komputer lokal:
+
+### 1. Clone Repository
+\`\`\`bash
+git clone https://github.com/USERNAME_KAMU/elearning-capstone.git
+cd elearning-capstone
+\`\`\`
+
+### 2. Install Dependencies
+\`\`\`bash
+npm install
+\`\`\`
+
+### 3. Setup Environment Variables
+Buat file `.env` di *root* folder proyek dan tambahkan URL database kamu (sesuaikan dengan kredensial MySQL/PostgreSQL milikmu):
+\`\`\`env
+DATABASE_URL="mysql://user:password@localhost:3306/learnai_db"
+NEXTAUTH_SECRET="buat_rahasia_acak_disini"
+NEXTAUTH_URL="http://localhost:3000"
+\`\`\`
+
+### 4. Setup Database & Seeding
+Jalankan perintah ini untuk melakukan migrasi skema database dan menyuntikkan data *dummy* (modul, relasi konsep, dan 5 akun mahasiswa untuk pengujian):
+\`\`\`bash
+npx prisma db push
+npx tsx src/lib/seed.ts
+\`\`\`
+
+### 5. Jalankan Aplikasi (Development Mode)
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
+Aplikasi dapat diakses melalui browser di `http://localhost:3000`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Skenario Pengujian AI (Untuk Dosen / Penguji)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Untuk memvalidasi algoritma personalisasi, aplikasi sudah dilengkapi dengan **5 akun Dummy** yang memiliki histori belajar berbeda. Gunakan kredensial berikut (Password untuk semua akun: `password123`):
 
-## Learn More
+1. **User Frontend** (`andi@test.com`)
+   - *Histori:* Menyelesaikan modul HTML, CSS, JavaScript.
+   - *Ekspektasi Output:* AI merekomendasikan React dan TypeScript (Content-Based).
+2. **User Backend** (`budi@test.com`)
+   - *Histori:* Menyelesaikan modul Database dan API.
+   - *Ekspektasi Output:* AI merekomendasikan Docker dan backend tingkat lanjut.
+3. **User Concept-Relation Target** (`citra@test.com`)
+   - *Histori:* Menyelesaikan modul AI Fundamentals.
+   - *Ekspektasi Output:* AI mendeteksi relasi konsep dan merekomendasikan "Neural Networks" dengan alasan eksplisit sebagai **Materi Lanjutan** (*Pembuktian Novelty*).
+4. **User Cold Start** (`dani@test.com`)
+   - *Histori:* Akun baru, belum ada interaksi yang signifikan.
+   - *Ekspektasi Output:* Fallback ke sistem rekomendasi materi Terpopuler.
+5. **User Full-Stack** (`eva@test.com`)
+   - *Histori:* Minat campuran (Frontend & API).
+   - *Ekspektasi Output:* Rekomendasi Hybrid berdasarkan kemiripan dengan *user* lain (Collaborative Filtering).
 
-To learn more about Next.js, take a look at the following resources:
+*(Untuk login ke dasbor pengajar/admin, gunakan email `admin@test.com` dengan password `password123`)*.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👨‍💻 Pengembang
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Moh Rifqi Alfi Dermawan**
+Program Studi Informatika
