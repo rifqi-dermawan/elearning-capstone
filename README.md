@@ -47,7 +47,7 @@ Ikuti langkah-langkah berikut untuk menjalankan project ini di komputer lokal An
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/USERNAME_KAMU/elearning-capstone.git
+git clone https://github.com/username/elearning-capstone.git
 cd elearning-capstone
 *(Catatan: Sesuaikan URL dengan repository GitHub Anda)*
 
@@ -75,7 +75,7 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 # Contoh menggunakan Gmail App Password
 SMTP_HOST="smtp.gmail.com"
 SMTP_PORT="465"
-SMTP_USER="emailmudisini@gmail.com"
+SMTP_USER="emailmu@gmail.com"
 SMTP_PASSWORD="app_password_gmail"
 \`\`\`
 
