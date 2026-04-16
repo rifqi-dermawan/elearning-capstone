@@ -30,8 +30,8 @@ export default function ModuleDetailPage({
       .then((data) => {
         setModule(data);
         setLoading(false);
-        // Log "CLICK" activity
-        if (session?.user?.id) {
+        // Log "CLICK" activity (skip for Guest)
+        if (session?.user?.id && session?.user?.role !== "GUEST") {
           fetch("/api/logs", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -125,7 +125,17 @@ export default function ModuleDetailPage({
             <p className="text-lg text-slate-600">{module.description}</p>
           </div>
 
-          {!done ? (
+          {session?.user?.role === "GUEST" ? (
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 lg:p-8 text-center">
+              <h3 className="font-bold text-slate-900 mb-2 text-lg">Login sebagai Student</h3>
+              <p className="text-sm text-slate-500 mb-6">
+                Anda perlu login sebagai Student untuk submit progress dan menyimpan aktivitas pembelajaran Anda.
+              </p>
+              <Button asChild variant="outline" className="border-slate-200">
+                <Link href="/login">Login Sekarang</Link>
+              </Button>
+            </div>
+          ) : !done ? (
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 lg:p-8">
               <h3 className="font-bold text-slate-900 mb-4 text-lg">Selesaikan Materi Ini</h3>
               <p className="text-sm text-slate-500 mb-6 max-w-xl">

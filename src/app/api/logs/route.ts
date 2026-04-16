@@ -14,6 +14,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Field wajib tidak lengkap" }, { status: 400 });
     }
 
+    if (session?.user?.role === "GUEST") {
+      return NextResponse.json({ error: "Akun Guest tidak dapat menyimpan riwayat" }, { status: 403 });
+    }
+
     const log = await prisma.userLog.create({
       data: {
         userId: effectiveUserId,

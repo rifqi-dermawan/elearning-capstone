@@ -5,7 +5,11 @@ import { authOptions } from "@/lib/auth";
 
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions);
+    const isGuest = session?.user?.role === "GUEST";
+
     const modules = await prisma.module.findMany({
+      where: isGuest ? { published: true } : undefined,
       include: { _count: { select: { logs: true } } },
       orderBy: { createdAt: "desc" },
     });
