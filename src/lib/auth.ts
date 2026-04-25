@@ -4,6 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 
+console.log("DEBUG_ENV_CHECK - ID:", process.env.GOOGLE_CLIENT_ID ? "Terdeteksi" : "KOSONG/MISSING");
+console.log("DEBUG_ENV_CHECK - SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "Terdeteksi" : "KOSONG/MISSING");
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
