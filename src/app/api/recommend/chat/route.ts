@@ -40,11 +40,21 @@ Jawab dengan ramah, berikan rekomendasi modul yang paling cocok dari katalog di 
 
       const reply = response.choices[0].message.content || "Maaf, saya tidak dapat memproses permintaan Anda.";
       return NextResponse.json({ reply });
-    } catch (hfError) {
+    } catch (hfError: any) {
       console.error("HF API Error:", hfError);
+      
+      const errorMessage = hfError?.message || "";
+      
+      // Check if the error is related to model loading (cold start on Hugging Face free tier)
+      if (errorMessage.toLowerCase().includes("loading") || errorMessage.includes("503")) {
+        return NextResponse.json({
+          reply: "Sistem AI sedang memuat ulang setelah beberapa saat tidak aktif. Mohon tunggu sekitar 20-30 detik dan coba tanyakan lagi ya!"
+        });
+      }
+
       // Fallback if HF API key is invalid or rate limited
       return NextResponse.json({
-        reply: "Maaf, integrasi AI Open Source sedang mengalami kendala atau API Key HuggingFace belum diatur di sistem. Pastikan untuk menambahkan `HUGGING_API_KEY` di file `.env` Anda."
+        reply: `Maaf, integrasi AI Open Source sedang mengalami kendala. Error dari sistem: ${errorMessage} (Jika error Invalid Token, pastikan API Key ada di .env dan server sudah direstart).`
       });
     }
   } catch (error) {
